@@ -16,6 +16,15 @@ public class DemicalToBinary {
         result = (int)temp;
         return result;
     }
+    public String Sharp(int n){
+        int result = Binary(n);
+        String answer ="";
+
+        answer = Integer.toString(result);
+        answer=answer.replace("1","#");
+        answer=answer.replace("0"," ");
+        return answer;
+    }
     public static void main(String[] args) {
         Scanner sc =new Scanner(System.in);
         DemicalToBinary db = new DemicalToBinary();
@@ -23,6 +32,7 @@ public class DemicalToBinary {
         int n = sc.nextInt();
 
         System.out.println(db.Binary(n));
+        System.out.println(db.Sharp(n));
 
 
     }

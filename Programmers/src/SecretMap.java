@@ -1,11 +1,13 @@
 import java.util.Scanner;
 
 public class SecretMap {
-    public String[] solution(int n, int[] arr1, int[] arr2) {
+    public String[] solution(int n, int[] arr1) {
 
-        String[] answer = {};
+        String[] answer = new String[n];
+
         int bn = 0;
         int count =0;
+
         for(int i=0; i<n; i++){
             while(arr1[i] !=0){
                 int remainder = arr1[i] %2;
@@ -15,6 +17,9 @@ public class SecretMap {
                 count++;
             }
             arr1[i]=bn;
+        }
+        for(int i=0; i<n; i++){
+            answer[i] = answer[i]+arr1[i];
         }
 
 
@@ -32,11 +37,11 @@ public class SecretMap {
         for(int i=0; i<n; i++){
             arr1[i] = sc.nextInt();
         }
-        for(int i=0; i<n; i++){
-            arr2[i] = sc.nextInt();
-        }
+//        for(int i=0; i<n; i++){
+//            arr2[i] = sc.nextInt();
+//        }
         sc.close();
-        System.out.print(sm.solution(n,arr1,arr2));
+        System.out.print(sm.solution(n,arr1));
 
     }
 }
