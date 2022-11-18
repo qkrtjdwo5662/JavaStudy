@@ -1,23 +1,21 @@
 import java.util.Scanner;
+
 public class N_1206 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        int height = sc.nextInt();
-        int array[] = new int[height+1];
-        int max =0;
-        int count =0;
-        for(int i=1; i<array.length; i++){
-            array[i] = sc.nextInt();
+        int width = sc.nextInt();
+        int []buildings  = new int[width];
+        int max;
+        int count=0;
+        for(int i=0; i<buildings.length; i++){
+            buildings[i] = sc.nextInt();
         }
-
-        for(int i=3; i<=array.length-2; i++){
-            if(array[i]>array[i-1] && array[i]>array[i-2] &&
-                array[i]>array[i+1] && array[i]>array[i+2]){
-                max = Math.max(Math.max(array[i-2],array[i-1]),Math.max(array[i+1],array[i+2]));
-                count = count + array[i]-max;
+        for(int i=2; i<buildings.length-2; i++){
+            if(buildings[i]>buildings[i-2] && buildings[i]>buildings[i-1]
+                && buildings[i]>buildings[i+1] && buildings[i]>buildings[i+2]) {
+                max = Math.max(Math.max(buildings[i-2],buildings[i-1]),Math.max(buildings[i+1],buildings[i+2]));
+                count = count+buildings[i]-max;
             }
         }
-        System.out.println(count);
     }
 }
