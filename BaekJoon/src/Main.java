@@ -1,22 +1,39 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
-        int f = 1;
-        if(n==0){
-            System.out.println(f);
-        }else{
-            for (int i = 1; i <=n ; i++) {
-                f = f*i;
-            }
-            System.out.println(f);
+    private static int N;
+    private static int arr[];
+    private static boolean isSelected[];
+    public static void main(String[] args) throws NumberFormatException, IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine());
+        arr = new int[N];
+        isSelected = new boolean[N];
+
+        perm(0);
+    }
+
+    private static void perm(int cnt) {
+        if(cnt == N) {
+            for(int i=0;i<N;i++)
+                System.out.print(arr[i]+" ");
+            System.out.println();
+            return ;
+        }
+
+        for(int i=0;i<N;i++) {
+            if(isSelected[i])
+                continue;
+            arr[cnt] = i+1;
+            isSelected[i] = true;
+            perm(cnt+1);
+            isSelected[i] = false;
         }
     }
+
 }
