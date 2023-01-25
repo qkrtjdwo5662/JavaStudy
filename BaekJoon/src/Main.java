@@ -2,38 +2,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
-
-    private static int N;
-    private static int arr[];
-    private static boolean isSelected[];
-    public static void main(String[] args) throws NumberFormatException, IOException {
-
+public class Main{
+    static int n;
+    static int[] arr;
+    static boolean[] visited;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
 
-        N = Integer.parseInt(br.readLine());
-        arr = new int[N];
-        isSelected = new boolean[N];
-
+        arr = new int[n];
+        visited = new boolean[n];
         perm(0);
-    }
 
-    private static void perm(int cnt) {
-        if(cnt == N) {
-            for(int i=0;i<N;i++)
-                System.out.print(arr[i]+" ");
+    }
+    static void perm(int depth){
+        if(depth==n){
+            for (int i = 0; i < n; i++) {
+                System.out.print(arr[i] + " ");
+            }
             System.out.println();
-            return ;
         }
-
-        for(int i=0;i<N;i++) {
-            if(isSelected[i])
-                continue;
-            arr[cnt] = i+1;
-            isSelected[i] = true;
-            perm(cnt+1);
-            isSelected[i] = false;
+        for (int i = 0; i < n; i++) {
+            if(!visited[i]){
+                visited[i] = true;
+                arr[depth] = i+1;
+                perm(depth+1);
+                visited[i] = false;
+            }
         }
     }
-
 }
