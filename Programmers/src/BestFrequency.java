@@ -2,16 +2,23 @@ import java.util.Arrays;
 
 public class BestFrequency {
     public static void main(String[] args) {
-
+        int array[] = {1, 1, 2, 2};
+        System.out.println(solution(array));
     }
     static int solution(int[] array) {
         int answer = 0;
         Arrays.sort(array);
-        int check = 1;
-        for(int i=0; i<array.length; i++){
-            if(array[i]==array[i+1]){
-                check ++;
-
+        int max = 0;
+        int check[] = new int[1000];
+        for(int i=0; i<array.length-1; i++){
+            check[array[i]]++;
+        }
+        for (int i = 0; i < check.length; i++) {
+            if(max<check[i]){
+                max = check[i];
+                answer = i;
+            } else if (max == check[i]) {
+                answer = -1;
             }
         }
         return answer;
