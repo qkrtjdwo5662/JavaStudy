@@ -10,8 +10,8 @@ public class BestFrequency {
         Arrays.sort(array);
         int max = 0;
         int check[] = new int[1000];
-        for(int i=0; i<array.length-1; i++){
-            check[array[i]]++;
+        for(int i=0; i<array.length; i++){
+            check[array[i]] =  check[array[i]]+1;
         }
         for (int i = 0; i < check.length; i++) {
             if(max<check[i]){
