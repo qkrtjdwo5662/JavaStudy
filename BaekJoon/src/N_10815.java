@@ -24,14 +24,17 @@ public class N_10815 {
             arr_m[i] = Integer.parseInt(st.nextToken());
             for (int j = 0; j < n; j++) {
                 if(arr_m[i]==arr_n[j]){
-                    check[i] = 1;
+                    bw.write("1 ");
+                    break;
+                } else if (j==n-1) {
+                    bw.write("0 ");
                 }
             }
-        }
 
-        for (int i = 0; i < m; i++) {
-            System.out.print(check[i]+" ");
         }
+        bw.flush();
+        bw.close();
+
 
 
     }
