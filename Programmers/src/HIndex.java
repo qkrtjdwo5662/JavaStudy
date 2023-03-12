@@ -12,13 +12,10 @@ public class HIndex {
     {
         int answer = 0;
         Arrays.sort(citations);
-        System.out.println(citations[0]);
         for (int i = 0; i < citations.length; i++) {
-            if(citations[i]==i+1 && citations[i]==citations.length-i){
-                answer  = citations[i];
-                return answer;
-            }
+            answer = citations.length - i;
+            if(citations[i] >= answer) return answer;
         }
-        return citations.length/2;
+        return answer;
     }
 }
