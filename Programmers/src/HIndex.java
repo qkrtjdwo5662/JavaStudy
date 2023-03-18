@@ -16,6 +16,6 @@ public class HIndex {
             answer = citations.length - i;
             if(citations[i] >= answer) return answer;
         }
-        return answer;
+        return 0;
     }
 }
