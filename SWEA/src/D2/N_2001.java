@@ -14,7 +14,6 @@ public class N_2001 {
         int m = Integer.parseInt(st.nextToken());
 
         int max = Integer.MIN_VALUE;
-        int sum = 0;
         int [][] array = new int[n][n];
 
         for (int i = 0; i < array.length; i++) {
@@ -24,22 +23,20 @@ public class N_2001 {
             }
         }
 
-        
-        for (int i = 0; i <(n-m)*(n-m) ; i++) {
-            for (int j = 0; j < m; j++) {
-                for (int k = 0; k <m ; k++) {
-                    sum = sum + array[j][k];
+
+        for (int i = 0; i < n-m+1; i++) {
+            for (int j = 0; j < n-m-+1; j++) {
+                int sum = 0;
+                for (int k = 0; k < m; k++) {
+                    for (int l = 0; l < m; l++) {
+                        sum = sum + array[i+k][j+l];
+                    }
+                }
+                if(max<sum){
+                    max = sum;
                 }
             }
         }
-
-
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println(sum);
+        System.out.println(max);
     }
 }
