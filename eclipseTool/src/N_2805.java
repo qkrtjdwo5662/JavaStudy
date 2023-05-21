@@ -10,22 +10,37 @@ class N_2805{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int n = Integer.parseInt(st.nextToken());
-		int[][] array = new int[n][n];
-		
-		for(int i=0; i<n; i++) {
+		int tc = Integer.parseInt(st.nextToken());
+		for(int i=1; i<=tc; i++) {
 			st = new StringTokenizer(br.readLine());
-			String str = st.nextToken();
+			int n = Integer.parseInt(st.nextToken());
+			int[][] array = new int[n][n];
+			
+			
 			for(int j=0; j<n; j++) {
-				array[i][j] = str.charAt(j)-'0';
+				st = new StringTokenizer(br.readLine());
+				String str = st.nextToken();
+				for(int k=0; k<n; k++) {
+					array[j][k] = str.charAt(k)-'0';
+				}
 			}
-		}
-		
-		for(int i = 0; i<n; i++) {
-			for(int j = 0; j<n; j++) {
-				System.out.print(array[i][j] + " ");
+			
+			int sum = 0;
+			// 0 ~ array.length/2
+			for(int j=0; j<=array.length/2; j++) {
+				for(int k=array.length/2-j; k<=array.length/2+j; k++) {
+					sum = sum + array[j][k];
+				}
 			}
-			System.out.println();
+			
+			// array.length ~ array.length/2
+			for(int j=array.length-1; j>array.length/2; j--) {
+				for(int k=array.length/2-((array.length-1)-j); k<=array.length/2+((array.length-1)-j); k++) {
+					sum = sum + array[j][k];
+				}
+			}
+			System.out.println("#"+i+" "+sum);
+			
 		}
 		
 	}
