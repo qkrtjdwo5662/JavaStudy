@@ -12,7 +12,7 @@ public class N_13732{
 			int n = Integer.parseInt(br.readLine());
 			char[][] board = new char[n][n];
 			int[][] check = new int[n][n];
-			String judge = "no";
+			boolean judge = false;
 			for(int j=0; j<board.length; j++) {
 				String s = br.readLine();
 				for(int k=0; k<board[j].length; k++) {
@@ -22,34 +22,30 @@ public class N_13732{
 					}
 				}
 			}
-			int one_count = 0;
-			int max_count = 0;
+			int count = 0;
+		
 			
 			for(int j=1; j<board.length; j++) {
 				for(int k=1; k<board[j].length; k++)
-					if(check[j][k]>0 ) {
-						int min = Math.min(check[j-1][k], Math.min(check[j-1][k-1], check[j][k-1]));
-						check[j][k] = min + 1;
+					if(check[j-1][k] == 1 && check[j-1][k-1] == 1 && check[j][k-1] == 1  ) {
+						check[j][k] = check[j][k] + 1;
 				}
 			}
 			
-			int max =0;
-			for(int j=0; j<board.length; j++) {
-				for(int k=0; k<board[j].length; k++) {
+			
+			for(int j=1; j<board.length; j++) {
+				for(int k=1; k<board[j].length; k++) {
 					if(check[j][k]>1) {
-						if(max<check[j][k]) {
-							max_count = 1;
-							max = check[j][k];
-						}else if(max == check[j][k]) max_count ++;
+						judge = true;
+						return;
 					}
 					else if(check[j][k]==1) {
-						one_count ++;
-						continue;
+						count ++;
 					}
 				}
 			}
-			if(one_count ==1) judge = "yes";
-			if(max_count ==1) judge = "yes";
+			if(count ==1) judge = true;
+			
 			System.out.println("#" + i+ " " + judge);
 		}
 	}
