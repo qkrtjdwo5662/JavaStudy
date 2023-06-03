@@ -27,14 +27,11 @@ public class N_10816_Hash {
 
         int m = Integer.parseInt(st.nextToken());
 
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
-        st = new StringTokenizer(br.readLine());
-
         for (int i = 0; i < m; i++) {
             int k = Integer.parseInt(st.nextToken());
             if(sgCard.containsKey(k)){
-                sb.append(sgCard.get(k)+" ");
-            }else sb.append(0+" ");
+                sb.append(sgCard.get(k)).append(" ");
+            }else sb.append(0).append(" ");
         }
 
         System.out.println(sb);
