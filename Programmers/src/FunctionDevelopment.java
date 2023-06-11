@@ -23,14 +23,16 @@ public class FunctionDevelopment {
                 progresses[i] = progresses[i] - speeds[i];
                 divide_count++;
             }
-            if(max < divide_count){
+            if(max < divide_count || arrayDeque.isEmpty()){
                 max = divide_count;
                 arrayDeque.addLast(1);
             }else{
                 max = max - divide_count;
                 arrayDeque.addLast(arrayDeque.peekLast()+1);
                 arrayDeque.pollFirst();
+
             }
+            System.out.println(arrayDeque);
         }
         int[] answer = new int[arrayDeque.size()];
         System.out.println(arrayDeque);
