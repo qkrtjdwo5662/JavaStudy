@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.util.Arrays;
 
 public class FunctionDevelopment {
 //    public static int[] progresses = {93, 30, 55};
@@ -8,34 +9,36 @@ public class FunctionDevelopment {
     public static int[] speeds = {1, 1, 1, 1, 1, 1};
 
     public static void main(String[] args) {
-        solution(progresses, speeds);
+        System.out.println(Arrays.toString(solution(progresses, speeds)));
     }
 
     public static int[] solution(int[] progresses, int[] speeds){
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+        int[] days = new int[progresses.length];
 
-        int distribution = 0;
-        int max = 0;
-        for (int i = 0; i < progresses.length; i++) {
+        for (int i = 0; i < days.length; i++) {
+            int day = 0;
             progresses[i] = 100 - progresses[i];
-            int divide_count = 0;
             while(progresses[i]>0){
                 progresses[i] = progresses[i] - speeds[i];
-                divide_count++;
+                day++;
             }
-            if(max < divide_count || arrayDeque.isEmpty()){
-                max = divide_count;
+            days[i] = day;
+        }
+
+        int temp = 0;
+        for (int i = 0; i < days.length; i++) {
+            if(temp<days[i]){
+                temp = days[i];
                 arrayDeque.addLast(1);
             }else{
-                max = max - divide_count;
-                arrayDeque.addLast(arrayDeque.peekLast()+1);
-                arrayDeque.pollFirst();
+                arrayDeque.addLast(arrayDeque.pollLast()+1);
 
             }
-            System.out.println(arrayDeque);
         }
+
         int[] answer = new int[arrayDeque.size()];
-        System.out.println(arrayDeque);
+
         for (int i = 0; i < answer.length; i++) {
             answer[i] = arrayDeque.pollFirst();
         }
