@@ -32,7 +32,7 @@ public class NetWork{
             if(!visited[i]){ // 방문하지 않았으면 방문
                 visited[i] = true; // 방문 체크
                 deque.addLast(i); // queue에 저장
-                
+
                 while(!deque.isEmpty()){ // dfs
                     int now = deque.pollFirst();
                     for (int j = 0; j < adjList[now].size(); j++) {
