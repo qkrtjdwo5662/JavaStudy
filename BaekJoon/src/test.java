@@ -5,21 +5,21 @@ import java.util.*;
 
 public class test {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s= br.readLine();
-        String[] c = s.split(",");
-        c[0] = c[0].replace("[","");
-        c[c.length-1] = c[c.length-1].replace("]","");
-//        for (int i = 0; i <s.length() ; i++) {
-//            if(s.charAt(i)=='[' || s.charAt(i)==']' || s.charAt(i)==','){
-//                continue;
-//            }else System.out.println(s.charAt(i));
-//        }
-        System.out.println(Arrays.toString(c));
-        for (int i = 0; i < c.length; i++) {
-            System.out.print(Integer.parseInt(c[i])+" ");
-        }
-        System.out.println(c.length);
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+
+        ArrayDeque<Integer> test = new ArrayDeque<>();
+
+        arrayDeque.addFirst(1);
+        arrayDeque.addFirst(2);
+        arrayDeque.addFirst(3);
+
+        test.addLast(1);
+        test.addLast(1);
+        test.addLast(1);
+
+        test = arrayDeque;
+
+        System.out.println(test);
 
 
     }
