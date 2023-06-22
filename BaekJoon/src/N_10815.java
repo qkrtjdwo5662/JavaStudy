@@ -1,41 +1,33 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class N_10815 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        StringTokenizer st =new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(st.nextToken());
+
+
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
         st = new StringTokenizer(br.readLine());
-        int arr_n[] = new int[n];
-        for (int i = 0; i <n ; i++) {
-            arr_n[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < n; i++) {
+            hashMap.put(Integer.parseInt(st.nextToken()),0);
         }
 
         st = new StringTokenizer(br.readLine());
         int m = Integer.parseInt(st.nextToken());
+
         st = new StringTokenizer(br.readLine());
-        int arr_m[] = new int[m];
-        int check[] = new int[m];
         for (int i = 0; i < m; i++) {
-            arr_m[i] = Integer.parseInt(st.nextToken());
-            for (int j = 0; j < n; j++) {
-                if(arr_m[i]==arr_n[j]){
-                    bw.write("1 ");
-                    break;
-                } else if (j==n-1) {
-                    bw.write("0 ");
-                }
-            }
-
+            int card = Integer.parseInt(st.nextToken());
+            if(hashMap.containsKey(card)) sb.append(1).append(" ");
+            else sb.append(0).append(" ");
         }
-        bw.flush();
-        bw.close();
-
-
-
+        System.out.print(sb);
     }
 }
