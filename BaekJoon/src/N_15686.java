@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class N_15686 {
@@ -14,8 +13,8 @@ public class N_15686 {
         int m = Integer.parseInt(st.nextToken());
 
         int[][] map = new int[n][n];
-        ArrayList<int []> house = new ArrayList<>();
-        ArrayList<int []> chicken = new ArrayList<>();
+        ArrayList<int []> house = new ArrayList<>(); // 집 좌표
+        ArrayList<int []> chicken = new ArrayList<>(); // 치킨 집 좌표
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -26,14 +25,24 @@ public class N_15686 {
                 else if (data == 2) chicken.add(new int[]{i, j});
             }
         }
-//        System.out.println(Arrays.deepToString(bfs(m, chicken)));
+        // 집, 치킨 집으로 분류
 
-    }
-    public static int[][] bfs(int m, ArrayList<int []> chicken){
-        int[][] answer = new int[m][2];
-        boolean[] visit = new boolean[chicken.size()];
-
-
-        return answer;
+//        ArrayList<Integer> arrayList = new ArrayList<>();
+        // depth(m) 2일 떄
+        int answer = Integer.MAX_VALUE;
+        for (int i = 0; i < chicken.size()-1; i++) {
+            for (int j = i+1; j < chicken.size(); j++) {
+                int sum = 0;
+                for (int k = 0; k < house.size(); k++) {
+                    sum = sum + Math.min(
+                            (Math.abs(chicken.get(i)[0] - house.get(k)[0]) + Math.abs(chicken.get(i)[1] - house.get(k)[1])),
+                            (Math.abs(chicken.get(j)[0] - house.get(k)[0]) + Math.abs(chicken.get(j)[1] - house.get(k)[1]))
+                    );
+                    //한 집으로 부터 두 개의 치킨 집까지 거리 들 중 작은 값
+                }
+                answer = Math.min(sum, answer);
+            }
+        }
+        System.out.println(answer);
     }
 }
