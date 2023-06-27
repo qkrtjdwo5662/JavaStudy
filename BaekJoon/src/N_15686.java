@@ -52,7 +52,7 @@ public class N_15686 {
 
     public static void backtrack(int depth, int m){
         if(depth == m)
-            
+
             return;
     }
 }

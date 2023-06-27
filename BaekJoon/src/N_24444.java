@@ -31,7 +31,6 @@ public class N_24444 {
         for (int i = 1; i <=n ; i++) {
             Collections.sort(adjList[i], Collections.reverseOrder()); // 장렬
         }
-        System.out.println(Arrays.toString(adjList));
         ArrayDeque<Integer> deque = new ArrayDeque<>();
         boolean[] visited = new boolean[n+1];
         int[] answer = new int[n+1];
@@ -40,22 +39,18 @@ public class N_24444 {
         int count = 1;
         answer[start] = count;
 
-        while(!deque.isEmpty()){
+        while(!deque.isEmpty()) {
             int now = deque.pollFirst();
-            if(adjList[now].size() ==0){
-                sb.append(0).append("\n");
-            }else{
-                for (int i = 0; i < adjList[now].size(); i++) {
-                    if(!visited[adjList[now].get(i)]){
-                        visited[adjList[now].get(i)] = true;
-                        deque.addLast(adjList[now].get(i));
-                        count = count +1;
-                        answer[adjList[now].get(i)] = count;
-                    }
+            for (int i = 0; i < adjList[now].size(); i++) {
+                if (!visited[adjList[now].get(i)]) {
+                    visited[adjList[now].get(i)] = true;
+                    deque.addLast(adjList[now].get(i));
+                    count = count + 1;
+                    answer[adjList[now].get(i)] = count;
                 }
             }
-
         }
+
         for (int i = 1; i <= n; i++) {
             sb.append(answer[i]).append("\n");
         }
