@@ -1,26 +1,24 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
 
 public class test {
-    public static void main(String[] args) throws IOException {
-        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+    public static boolean visited[];
+    public static void main(String[] args)  {
+        int n = 4;
+        visited = new boolean[n+1];
+        backtrack("", n);
 
-        ArrayDeque<Integer> test = new ArrayDeque<>();
+    }
+    public static void backtrack(String s, int n){
+        if(s.length()==2){
+            System.out.println(s);
+            return;
+        }
 
-        arrayDeque.addFirst(1);
-        arrayDeque.addFirst(2);
-        arrayDeque.addFirst(3);
-
-        test.addLast(1);
-        test.addLast(1);
-        test.addLast(1);
-
-        test = arrayDeque;
-
-        System.out.println(test);
-
-
+        for (int i = 1; i <= n; i++) {
+            if(!visited[i]){
+                visited[i] = true;
+                backtrack(s+i, n);
+                visited[i] = false;
+            }
+        }
     }
 }

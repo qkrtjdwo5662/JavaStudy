@@ -1,0 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class N_15652 {
+    public static int n;
+    public static int m;
+    public static StringBuilder sb;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        sb = new StringBuilder();
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+
+        backtrack(0, "",1);
+        System.out.print(sb);
+    }
+    public static void backtrack(int depth, String s, int num){
+        if(depth == m){
+            sb.append(s).append("\n");
+            return;
+        }
+
+        for (int i = num; i <= n; i++) {
+            if(depth!=0) backtrack(depth+1, s+" "+i, i);
+            else backtrack(depth+1, s+i, i);
+        }
+    }
+}
