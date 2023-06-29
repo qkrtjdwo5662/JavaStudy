@@ -9,25 +9,29 @@ public class N_11286 {
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x,y) -> {
+            int absX = Math.abs(x);
+            int absY = Math.abs(y);
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+            if(absX==absY){ // 절댓 값 x, y 같을 때
+                if(x<=y) return -1;
+                else return 1;
+            }
+            else if(absX < absY) return -1;
+            else return 1;
 
+        });
         for (int i = 0; i < n; i++) {
-            int k = Integer.parseInt(br.readLine());
-            if(k == 0){ // k가 0일 때 (poll 얀신)
-                if(pq.isEmpty()){ // pq empty check
-                    sb.append(0).append("\n"); // 0
-                }else {
-                    int temp = pq.poll();
-                    if(!pq.isEmpty() && Math.abs(temp)>pq.peek()){
-                        sb.append(pq.poll()).append("\n");
-                        pq.add(temp);
-                    }else{
-                        sb.append(temp).append("\n");
-                    }
+            int data = Integer.parseInt(br.readLine());
+
+            if(data == 0){ // 0이면 출력
+                if(pq.isEmpty()){ // 비어있으면 0 출력
+                    sb.append(0).append("\n");
+                    continue;
                 }
-            }else{ // k가 0이 아닐 때
-                pq.add(k);
+                sb.append(pq.poll()).append("\n");
+            }else{
+                pq.add(data); // 0이 아니면 넣고
             }
         }
         System.out.print(sb);
