@@ -1,36 +1,28 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class N_1065 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        //1000보다 작거나 같은 n
-        //n : 1~1000
-        int count =1;
-        int a = 0;
-        int b = 0;
-        int c = 0;
-        int d = 0;
 
-        for(int i=n; i>0; i--){
+        int answer =0;
+
+        // 한수 : X의 각 자리가 등차수열을 이루면 그 수는 한수
+        for (int i = 1; i <= n; i++) {
+            if(i < 100 ) {
+                answer++;
+                continue;
+            }
+
+            int firstNum = i %10;
+            int secondNum = (i /10)%10;
+            int thirdNum = ((i /10)/10)%10;
+            if(i!=1000 && (thirdNum-secondNum) == (secondNum - firstNum)) answer ++;
 
         }
-        while(n>10){
-            n = n/10;
-            count +=1;
-        }
-
-
-
-        System.out.println(count);
-        //각 자리수 파악
-
-
-
-
+        System.out.println(answer);
     }
 }
