@@ -1,49 +1,52 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Ranking {
-    static String[] user_scores;
+    public static int n = 5;
+    public static int[][] results = {{4, 3}, {4, 2}, {3, 2}, {1, 2}, {2, 5}};
+
+    public static ArrayList<Integer>[] adjList;
+    public static ArrayList<Integer> arrayList;
+    public static HashMap<Integer, Integer> hashMap;
     public static void main(String[] args) {
-        user_scores = new String[]{"alex111 100", "cheries2 200", "coco 150", "luna 100", "alex111 120", "coco 300", "cheries2 110"};
-
-        solution(3,user_scores);
+        System.out.println(solution(n, results));
     }
-    static int solution(int k, String[] user_scores){
+    public static int solution(int n, int[][] results){
         int answer = 0;
-        HashMap<String, Integer> map1 = new HashMap<>();
-        HashMap<String, Integer> map2 = new HashMap<>();
 
-        for (int i = 0; i < user_scores.length; i++) {
-            map1.put(user_scores[i].split(" ")[0], Integer.valueOf(user_scores[i].split(" ")[1]));
+        adjList = new ArrayList[n+1];
 
-            System.out.println("*map1*");
-            for (String key : map1.keySet()) {
-                int value = map1.get(key);
-                System.out.println(key+" : "+value);
-            }
-            System.out.println("*map2*");
-            for (String key : map2.keySet()) {
-                int value = map2.get(key);
-                System.out.println(key+" : "+value);
-            }
-            map2.put(user_scores[i].split(" ")[0], Integer.valueOf(user_scores[i].split(" ")[1]));
-            System.out.println("*****");
+        hashMap = new HashMap<>();
+        arrayList = new ArrayList<>();
+
+        for (int i = 1; i <= n ; i++) {
+            adjList[i] = new ArrayList<>();
         }
 
-        List<Map.Entry<String, Integer>> entryList = new LinkedList<>(map1.entrySet());
-
-
-        entryList.sort(Map.Entry.comparingByValue());
-        System.out.println("----------------------------------------");
-        for (HashMap.Entry<String, Integer> entry : entryList){
-            System.out.println(entry.getKey() +" : "+entry.getValue());
+        for (int i = 0; i < results.length; i++) {
+            adjList[results[i][0]].add(results[i][1]);
         }
-//        for (int i = 0; i < entryList.size(); i++) {
-//            System.out.println(entryList.get(i));
-//        }
 
+        for (int i = 1; i <= n; i++) {
+            hashMap.put(i, 0);
+            if(hashMap.containsKey(i) && !arrayList.contains(i)){
+                arrayList.add(i);
+            }
+            dfs(i);
+        }
+
+        answer = arrayList.size();
+        System.out.println(arrayList);
         return answer;
+    }
+    public static void dfs(int n){
+        for (int i = 0; i < adjList[n].size(); i++) {
+            System.out.println(adjList[n].get(i));
+            if(hashMap.containsKey(adjList[n].get(i)) && !arrayList.contains(adjList[n].get(i))){
+                arrayList.add(adjList[n].get(i));
+                hashMap.put(adjList[n].get(i), 0);
+            }
+            hashMap.put(adjList[n].get(i), 0);
+            dfs(adjList[n].get(i));
+        }
     }
 }
