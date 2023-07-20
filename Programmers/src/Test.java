@@ -1,18 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
 
 public class Test {
-    public static void main(String[] args) {
-        ArrayList<Integer> arrayList = new ArrayList<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        arrayList.add(1);
-        arrayList.add(3);
-        arrayList.add(5);
-        System.out.println(arrayList);
+        int n = Integer.parseInt(br.readLine());
+        recursive(n);
+    }
 
+    public static int recursive(int n){
+        int i;
 
-        arrayList.remove(Integer.valueOf(1));
-        System.out.println(arrayList);
+        if(n<1)
+            return 2;
+        else
+            i= (2 * recursive(n-1) + 1);
+            System.out.println(i);
+            return i;
     }
 }
