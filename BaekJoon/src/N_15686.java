@@ -5,54 +5,76 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class N_15686 {
-    public static ArrayList<int []> house;
-    public static ArrayList<int []> chicken;
+    public static int m;
+    public static ArrayList<int[]> chicken;
+    public static ArrayList<int[]> homeList;
+    public static boolean[] visited;
+    public static int answer = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
         int[][] map = new int[n][n];
-        house = new ArrayList<>(); // 집 좌표
-        chicken = new ArrayList<>(); // 치킨 집 좌표
-
+        homeList = new ArrayList<>();
+        chicken = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < n; j++) {
                 int data = Integer.parseInt(st.nextToken());
                 map[i][j] = data;
-                if (data == 1) house.add(new int[]{i, j});
-                else if (data == 2) chicken.add(new int[]{i, j});
+
+                if(data == 1){
+                    homeList.add(new int[]{i,j});
+                } else if (data == 2) {
+                    chicken.add(new int[]{i,j});
+                }
             }
         }
-        // 집, 치킨 집으로 분류
 
-        // depth(m) 2일 떄
-        int answer = Integer.MAX_VALUE;
+        visited = new boolean[chicken.size()];
 
-//        for (int i = 0; i < chicken.size()-1; i++) {
-//            for (int j = i+1; j < chicken.size(); j++) {
-//                int sum = 0;
-//                for (int k = 0; k < house.size(); k++) {
-//                    sum = sum + Math.min(
-//                            (Math.abs(chicken.get(i)[0] - house.get(k)[0]) + Math.abs(chicken.get(i)[1] - house.get(k)[1])),
-//                            (Math.abs(chicken.get(j)[0] - house.get(k)[0]) + Math.abs(chicken.get(j)[1] - house.get(k)[1]))
-//                    );
-//                    //한 집으로 부터 두 개의 치킨 집까지 거리 들 중 작은 값
-//                }
-//                answer = Math.min(sum, answer);
-//            }
-//        }
-
-
+        backtrack(0, 0);
         System.out.println(answer);
     }
+    public static void backtrack(int num, int count){
+        if(count == m){ // 선택 개수 맥시멈 차면
+            // 계산 시작
 
-    public static void backtrack(int depth, int m){
-        if(depth == m)
-
+            answer = Math.min(answer, minDist());
             return;
+        }
+
+        for (int i = num; i < chicken.size(); i++) {
+            if(!visited[i]){
+                visited[i] = true;
+
+
+                backtrack(i+1, count+1);
+
+                visited[i] = false;
+            }
+        }
+    }
+
+    public static int minDist(){
+        int result =0;
+        for (int i = 0; i < homeList.size(); i++) {
+            int[] now = homeList.get(i);
+            int min = Integer.MAX_VALUE;
+            int dist = 0;
+
+            for (int j = 0; j < chicken.size(); j++) {
+                if(visited[j]){
+                    dist = Math.abs(now[0] - chicken.get(j)[0]) + Math.abs(now[1] - chicken.get(j)[1]);
+                    min = Math.min(min, dist);
+                }
+            }
+            result = result + min;
+
+        }
+        return result;
     }
 }

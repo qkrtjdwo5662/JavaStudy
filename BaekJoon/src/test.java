@@ -1,15 +1,23 @@
-import java.util.ArrayDeque;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
-
-public class test {
+public class test{
+    public static int[] arr = {1,2,3,4};
+    public static boolean[] visited;
     public static void main(String[] args) {
-        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+        visited = new boolean[arr.length];
+        backtrack("", 0);
+    }
 
-        treeMap.put(1,1);
-        treeMap.put(2,1);
-        treeMap.put(3,1);
+    public static void backtrack(String s, int num){
+        if(s.length() == 1){
+            System.out.println(s);
+            return;
+        }
 
-        System.out.println(treeMap.containsKey(4));
+        for (int i = num; i < arr.length; i++) {
+            if(!visited[i]){
+                visited[i] = true;
+                backtrack(s + arr[i], i+1);
+                visited[i] = false;
+            }
+        }
     }
 }
