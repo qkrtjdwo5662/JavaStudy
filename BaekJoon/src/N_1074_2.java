@@ -21,34 +21,31 @@ public class N_1074_2 {
     }
 
     public static void divide(int x, int y,int size){
-        if(size == 2){ // size 2 될 때 까지 분할
-            for (int i = y; i < y+size; i++) {
-                for (int j = x; j < x+size; j++) {
-                    if(i == r && j==c) {
+        if(size == 2){
+            for (int i = y ; i < y+size; i++) {
+                for (int j = x; j <x+size ; j++) {
+                    if(r==i && c==j){
                         System.out.println(count);
-                        System.out.println("ttt");
-                        return;
                     }
                     count++;
-                    System.out.println(count);
                 }
             }
-            return;
         }
 
-        if(y<=r && r < y + size/2 && x<=c && c < x + size/2){
+        if(x<=c && c<x+size/2 && y<=r && r<y+size/2){
             count = count;
             divide(x, y, size/2);
-        }else if(y + size/2 <=r && r < y+size && x <=c && c < x+size/2){
-            count= count + size/2 * size/2;
+        }else if(x+size/2<=c && c<x+size && y<=r && r<y+size/2){
+            count = count+size/2 * size/2;
             divide(x+size/2, y, size/2);
-        }else if(y<=r && r<y+size/2 && x+size/2<=c && c<x+size){
-            count= count + size/2 * size/2 * 2;
-            divide(x, y + size/2, size/2);
-        } else if (y + size/2<=r && r<y+size && x+size/2 <= c && c<x+size) {
-            count= count + size/2 * size/2 * 3;
+        }else if(x<=c && c<x+size/2 && y+size/2<=r && r<y+size){
+            count = count+size/2 * size/2 * 2;
+            divide(x, y+size/2, size/2);
+        }else if(x+size/2<=c && c<x+size  && y+size/2<=r && r<y+size){
+            count = count+size/2 * size/2 * 3;
             divide(x+size/2, y+size/2, size/2);
         }
+
 
     }
 }
