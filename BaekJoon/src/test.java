@@ -1,16 +1,24 @@
 public class test{
+    public static boolean[] visited;
     public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder();
+        visited = new boolean[4];
+        dfs("");
+    }
 
-        sb.append("---");
-        sb.append("---");
-        sb.append("---");
+    public static void dfs(String s){
 
-        System.out.println(sb.length());
+        if(s.length() == 4){
+            System.out.println(s);
+            return;
+        }
 
-        sb.deleteCharAt(3);
-        System.out.println(sb);
-        sb.insert(3, " ");
-        System.out.println(sb);
+        for (int i = 0; i <4 ; i++) {
+            if(!visited[i]){
+                visited[i] = true;
+                dfs(s+i);
+                visited[i] = false;
+            }
+
+        }
     }
 }
