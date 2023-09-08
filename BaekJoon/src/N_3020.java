@@ -5,42 +5,42 @@ import java.util.StringTokenizer;
 
 public class N_3020 {
     public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        int h = Integer.parseInt(st.nextToken());
+
+        int[] top = new int[h+1];
+        int[] bottom = new int[h+1];
+
+        for (int i = 0; i < n/2; i++) {
+            int top_data = Integer.parseInt(br.readLine());
+            int bottom_data = Integer.parseInt(br.readLine());
+            
+            top[top_data]++;
+            bottom[bottom_data]++;
+        }
+
+        for (int i = h-1; i >0 ; i--) {
+            top[i] = top[i+1] + top[i];
+            bottom[i] = bottom[i+1] + bottom[i];
+        }
+
+
+        int[] answer = new int[h+1];
         int min = Integer.MAX_VALUE;
+
+        for (int i = 1; i <= h ; i++) {
+            answer[i] =  bottom[i] + top[h-i + 1];
+            min = Math.min(answer[i], min);
+        }
+
         int count = 0;
-        int[][] board = new int[m][n+1];
-
-        for(int i=0; i<n; i++){
-            int obstacle = Integer.parseInt(br.readLine());
-            if(i%2==0){
-                for (int j = board.length-1; j > board.length-1-obstacle; j--) {
-                    board[j][i] = 1;
-                    board[j][board[j].length-1] = board[j][board[j].length-1] +1;
-                }
-            }else {
-                for (int j = 0; j < obstacle; j++) {
-                    board[j][i] = 1;
-                    board[j][board[j].length-1] = board[j][board[j].length-1] +1;
-                }
-            }
+        for (int i = 1; i <= h; i++) {
+            if(min == answer[i]) count++;
         }
 
-        for (int i = 0; i < board.length; i++){
-           min = Math.min(min, board[i][board[i].length-1]);
-        }
-
-        for (int i = 0; i < board.length; i++){
-            if(min==board[i][board[i].length-1]) count++;
-        }
-
-        System.out.println(min+" "+count);
-
-        long end = System.currentTimeMillis();
-        System.out.println((end - start)/1000.0);
+        System.out.println(min + " " +count);
     }
 }
