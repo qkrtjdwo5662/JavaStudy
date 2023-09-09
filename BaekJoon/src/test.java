@@ -1,24 +1,25 @@
 public class test{
-    public static boolean[] visited;
+    public static int[] parent;
+    public static int n= 7;
     public static void main(String[] args) {
-        visited = new boolean[4];
-        dfs("");
-    }
+        parent = new int[n+1]; // 1 ~ 7
 
-    public static void dfs(String s){
-
-        if(s.length() == 4){
-            System.out.println(s);
-            return;
+        for (int i = 1; i <= n; i++) {
+            parent[i] = i;
         }
 
-        for (int i = 0; i <4 ; i++) {
-            if(!visited[i]){
-                visited[i] = true;
-                dfs(s+i);
-                visited[i] = false;
-            }
 
-        }
     }
+    public static void union(int a, int b){
+        int x = find(a);
+        int y = find(b);
+
+        parent[x] = y;
+    }
+    public static int find(int a){
+        if(parent[a] == a) return a;
+
+        return parent[a] = find(parent[a]);
+    }
+
 }
