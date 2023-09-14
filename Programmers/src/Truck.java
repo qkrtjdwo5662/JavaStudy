@@ -10,12 +10,32 @@ public class Truck {
     }
 
     public static int solution(int bridge_length, int weight, int[] truck_weights){
-        int answer = 0;
+        int answer =0;
+        ArrayDeque<Integer> truck = new ArrayDeque<>();
+        ArrayDeque<Integer> bridge = new ArrayDeque<>();
 
-        ArrayDeque<Integer> wait = new ArrayDeque<>();
+        for (int i = 0; i < truck_weights.length; i++) {
+            truck.addLast(truck_weights[i]);
+        }
 
-        for (int i = 0; i <truck_weights.length ; i++) {
-            wait.addLast(truck_weights[i]);
+        for (int i = 0; i < bridge_length; i++) {
+            bridge.addLast(0);
+        }
+
+        int sum = 0;
+
+        while(!bridge.isEmpty()){
+            sum = sum - bridge.pollFirst();
+            if(!truck.isEmpty()){
+                if(sum + truck.peekFirst() <= weight){
+                    int now = truck.pollFirst();
+                    sum = sum + now;
+                    bridge.addLast(now);
+                }else{
+                    bridge.addLast(0);
+                }
+            }
+            answer++;
         }
 
 
