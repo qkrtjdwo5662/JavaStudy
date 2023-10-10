@@ -25,7 +25,27 @@ public class SegmentTree {
         }
         System.out.println(Arrays.toString(tree));
     }
+    public static long query(int left, int right){
 
+        left = left + s_idx;
+        right = right + s_idx;
+
+        long sum = 0;
+        while(left <= right){
+            if(left % 2 == 1){
+                sum = sum + tree[left];
+            }
+
+            if(right % 2 == 0){
+                sum = sum + tree[right];
+            }
+
+            left = (left + 1)/2;
+            right = (right - 1)/2;
+        }
+        return sum;
+
+    }
     public static void update(int idx, long num){
         idx = idx + s_idx;
         tree[idx] = num;
