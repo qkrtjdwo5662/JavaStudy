@@ -14,30 +14,32 @@ public class N_2005 {
             sb.append("#").append(i).append("\n");
 
             int n = Integer.parseInt(br.readLine());
-
-            for (int j = 1; j <= n ; j++) {
-                if(j == 1 || j==2){ 
-                    for (int k = 0; k < j; k++) {
-                        sb.append("1").append(" ");
-                    }
-                    sb.append("\n");
+            //      1
+            //    1   1
+            // 2C0 2C1 2C2
+            // 3C0 3C1 3C2 3C3
+            for (int j = 0; j < n; j++) {
+                if(j == 0){
+                    sb.append("1");
                 }else{
-                    for (int k = 0; k < j; k++) {
-                        if(k==0 || k==j-1){
+                    for (int k = 0; k <= j ; k++) {
+                        if(k ==0 || k == j){
                             sb.append("1").append(" ");
                         }else{
-
+                            int r = k;
+                            if(r > j/2) r = j-r;
                             int num = 1;
-                            for (int l = 1; l <= k; l++) {
-                                num = num * ( (j-l) + 1) / k;
+                            for (int l = 1; l <= r ; l++) {
+                                num = num * (j-l + 1) / l;
                             }
                             sb.append(num).append(" ");
                         }
                     }
-                    sb.append("\n");
                 }
+                sb.append("\n");
             }
-            System.out.println(sb);
+
         }
+        System.out.println(sb);
     }
 }
