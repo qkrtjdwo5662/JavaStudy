@@ -1,9 +1,24 @@
 import java.util.Scanner;
 
 class Solution {
-    public static void main(String args[]) throws Exception {
-        String s = "abc";
+    public static int[] arr = {1,2,3,4};
+    public static boolean[] visited;
+    public static void main(String[] args) throws Exception {
+        visited = new boolean[arr.length];
+        dfs("");
+    }
 
-        System.out.println(s.repeat(3));
+    public static void dfs(String s){
+        if(s.length() == arr.length){
+            System.out.println(s);
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if(!visited[i]){
+                visited[i] = true;
+                dfs(s+arr[i]);
+                visited[i] = false;
+            }
+        }
     }
 }
