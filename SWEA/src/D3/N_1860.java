@@ -32,23 +32,31 @@ public class N_1860 {
             int index = 0;
             boolean flag = true;
             Arrays.sort(arr);
+
+            loop:
             while(index < n){
                 if(nowTime != 0 && nowTime % m == 0){
                     nowCount += k;
                 }
 
-                if(nowTime == arr[index]){
+                if(nowTime > arr[index]){
+                    flag = false;
+                    break;
+                }
+
+                while(nowTime == arr[index]){
                     if(nowCount > 0) {
                         nowCount -= 1;
                         index += 1;
                     }else{
                         flag = false;
-                        break;
+                        break loop;
                     }
-                }else if(nowTime > arr[index]){
-                    flag = false;
-                    break;
+
+                    if(index == n) break;
                 }
+
+
                 nowTime += 1;
             }
 
