@@ -25,31 +25,37 @@ public class N_1216 {
                     board[j][k] = s.charAt(k);
                 }
             }
-
-            for (int j = 0; j < 100; j++) {
-                for (int k = 0; k < 100; k++) {
-                    String s = "";
-                    for (int l = 0; l < 100-k; l++) {
-                        s += board[j][k+l];
-                    }
-                }
-            }
-            
             answer = 0;
+            for (int j = 0; j < 100; j++) {
+                for (int k = 0; k < 100- j; k++) {
+                    String s = "";
+                    for (int l = k; l <= j+k; l++) {
+                        s = s + board[j][l];
+                    }
+                    if(check(s)) answer = Math.max(answer, s.length());
+
+                    s="";
+                    for (int l = k; l <= j+k; l++) {
+                        s = s + board[l][j];
+                    }
+                    if(check(s)) answer = Math.max(answer, s.length());
+                }
+
+            }
+
+
+
             sb.append("#").append(i).append(" ").append(answer).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static void rowCheck(){
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 100; j++) {
-
-            }
+    public static boolean check(String s){
+        for (int i = 0; i < s.length()/2; i++) {
+            if(s.charAt(i) != s.charAt(s.length()-i-1)) return false;
         }
+
+        return true;
     }
 
-    public static void columnCheck(){
-
-    }
 }
