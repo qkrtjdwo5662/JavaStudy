@@ -22,23 +22,40 @@ public class N_2573 {
 
         board = new int[n][m];
 
-        int max = 0;
+
+        int answer = 0;
+        int count = 0;
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < m; j++) {
                 int num = Integer.parseInt(st.nextToken());
                 board[i][j] = num;
-
-                max = Math.max(max, num);
             }
         }
-        int answer = 0;
-        int count = 0;
+
 
         loop:
-        while(count < 2){
-            answer = answer+1;
+        while(true){
+            count = 0;
+            visited = new boolean[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if(!visited[i][j] && board[i][j] != 0){
+                        bfs(new int[]{i, j});
+                        count += 1;
+                    }
+
+                }
+            }
+
+            if(count == 0){
+                System.out.println(0);
+                break;
+            }else if(count > 1){
+                System.out.println(answer);
+                break;
+            }
 
             ArrayDeque<int[]> iceBerg = new ArrayDeque<>();
             for (int i = 0; i < n; i++) {
@@ -49,25 +66,9 @@ public class N_2573 {
             }
             visited = new boolean[n][m];
             melting(iceBerg, board);
-
-            visited = new boolean[n][m];
-            count = 0;
-
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    if(!visited[i][j] && board[i][j] != 0){
-                        count += 1;
-                        bfs(new int[]{i, j});
-                    }
-
-                    if(count > 1) break loop;
-                }
-            }
-
+            answer += 1;
         }
 
-        if(max == answer) System.out.println(0);
-        else System.out.println(answer);
 
 
     }
@@ -103,8 +104,9 @@ public class N_2573 {
     public static void melting(ArrayDeque<int[]> iceBerg, int[][] board){
         while(!iceBerg.isEmpty()){
             int[] now = iceBerg.pollFirst();
-            visited[now[0]][now[1]] = true;
-            int count = 0;
+            visited[now[0]][now[1]] = true; // 기존 좌표가 0되는 경우를 구분
+
+            int count = 0; // 상하좌우 0의 개수
             for (int i = 0; i < 4; i++) {
                 int r = now[0] + ry[i];
                 int c = now[1] + rx[i];
