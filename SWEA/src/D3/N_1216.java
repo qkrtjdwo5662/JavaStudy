@@ -6,53 +6,75 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N_1216 {
-    public static int answer;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         StringBuilder sb = new StringBuilder();
 
-        int tc = 10;
 
-        for (int i = 1; i <= tc ; i++) {
-            char[][] board = new char[100][100];
+        while(true){
             st = new StringTokenizer(br.readLine());
-            int t = Integer.parseInt(st.nextToken());
-            for (int j = 0; j < 100 ; j++) {
+            int tc = Integer.parseInt(st.nextToken());
+
+
+            int answer = 0;
+            char[][] board = new char[100][100];
+
+            for (int i = 0; i < 100; i++) {
                 st = new StringTokenizer(br.readLine());
-                String s = st.nextToken();
-                for (int k = 0; k < 100; k++) {
-                    board[j][k] = s.charAt(k);
+                String s= st.nextToken();
+                for (int j = 0; j < 100; j++) {
+                    board[i][j] = s.charAt(j);
                 }
             }
-            answer = 0;
-            for (int j = 0; j < 100; j++) {
-                for (int k = 0; k < 100- j; k++) {
+
+            for (int i = 0; i < 100; i++) {
+                for (int j = 0; j < 100; j++) {
                     String s = "";
-                    for (int l = k; l <= j+k; l++) {
-                        s = s + board[j][l];
-                    }
-                    if(check(s)) answer = Math.max(answer, s.length());
 
-                    s="";
-                    for (int l = k; l <= j+k; l++) {
-                        s = s + board[l][j];
+                    s = s + board[i][j];
+
+                    if(j != 99){
+                        for (int k = j+1; k <100 ; k++) { // 누적
+                            s = s+board[i][k];
+
+                            if (check(s)) {
+                                answer = Math.max(answer, s.length());
+                            }
+                        }
                     }
-                    if(check(s)) answer = Math.max(answer, s.length());
+
+                }
+                for (int j = 0; j < 100; j++) {
+                    String s = "";
+
+                    s = s + board[j][i];
+
+                    if(j != 99){
+                        for (int k = j+1; k <100 ; k++) { // 누적
+                            s = s+board[k][i];
+
+                            if (check(s)) {
+                                answer = Math.max(answer, s.length());
+                            }
+                        }
+                    }
+
                 }
 
             }
 
-
-
-            sb.append("#").append(i).append(" ").append(answer).append("\n");
+            sb.append("#").append(tc).append(" ").append(answer).append("\n");
+            if(tc == 10) break;
         }
         System.out.println(sb);
     }
 
     public static boolean check(String s){
         for (int i = 0; i < s.length()/2; i++) {
-            if(s.charAt(i) != s.charAt(s.length()-i-1)) return false;
+            if(s.charAt(i) != s.charAt(s.length() - 1 - i)){
+                return false;
+            }
         }
 
         return true;
