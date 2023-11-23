@@ -4,18 +4,17 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class N_1043 {
-    public static int[] parent;
-    public static boolean[] know;
-    public static void main(String[] args) throws IOException {
+public class N_1043_fail {
+
+    public static void main(String[] args) throws IOException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken()); // 사람 수 
-        int m = Integer.parseInt(st.nextToken()); //  파티 수 
+        int n = Integer.parseInt(st.nextToken()); // 사람 수
+        int m = Integer.parseInt(st.nextToken()); //  파티 수
 
-        parent = new int[n+1];
-        know = new boolean[n+1]; // 알고있는 사람
+        int[] parent = new int[n+1];
+
         for(int i=1; i<= n; i++){
             parent[i] = i;
         }
@@ -26,9 +25,7 @@ public class N_1043 {
         for (int i = 0; i <tc ; i++) {
             int num = Integer.parseInt(st.nextToken());
 
-            know[num] = true;
-
-            // 진실을 알고있으면 true
+            parent[num] = 0;
         }
 
 
@@ -37,29 +34,34 @@ public class N_1043 {
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int party = Integer.parseInt(st.nextToken()); // 파티 참가 인원
-
+//            int[] people = new int[party]; // 파티 사람 담아줌
             ArrayList<Integer> list = new ArrayList<>();
-
             for (int j = 0; j < party; j++) {
                 int num = Integer.parseInt(st.nextToken());
-
+//                people[j] = num;
                 list.add(num);
             }
+            boolean flag = false;
+            for (int j = 0; j < party; j++) {
+                int num = list.get(j);
 
-            for (int j = 0; j < party-1; j++) {
-                int now = list.get(j);
-                int next = list.get(j+1);
+                if(parent[num] == 0){
+                    flag = true;
+                    break;
+                }
+            }
 
-                union(now, next);
+            if(flag){ // 진실 아는 사람이 한명이라도 존재하면
+                for (int j = 0; j < party; j++) {
+                    int num = list.get(j);
+
+                    if(parent[num] != 0){
+                        parent[num] = 0;
+                    }
+                }
             }
 
             arrayList.add(list);
-        }
-
-        for (int i = 1; i <= n; i++) {
-            if(know[i]){
-                know[find(i)] = true;
-            }
         }
 
         int answer = 0;
@@ -70,7 +72,7 @@ public class N_1043 {
             for (int j = 0; j < list.size(); j++) {
                 int num = list.get(j);
 
-                if(know[find(num)]){
+                if(parent[num] == 0){
                     check = true;
                     break;
                 }
@@ -81,18 +83,5 @@ public class N_1043 {
         }
 
         System.out.println(answer);
-    }
-
-    public static void union(int a, int b){
-        int x = find(a);
-        int y = find(b);
-
-        parent[x] = y;
-    }
-    public static int find(int a){
-        if(parent[a] == a){
-            return parent[a];
-        }
-        return parent[a] = find(parent[a]);
     }
 }
