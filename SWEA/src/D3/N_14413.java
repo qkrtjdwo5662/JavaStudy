@@ -3,20 +3,16 @@ package D3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.StringTokenizer;
 
 public class N_14413 {
-    public static int[] ry = {1, -1, 0, 0};
-    public static int[] rx = {0, 0, 1, -1};
-
+    public static ArrayDeque<int[]> deque;
     public static int n;
     public static int m;
+    public static int[] ry ={1, -1, 0, 0};
+    public static int[] rx ={0, 0, 1, -1};
     public static int[][] board;
-    public static int count;
-    public static ArrayList<int[]> list;
-    public static boolean answer;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -26,94 +22,63 @@ public class N_14413 {
 
         for (int i = 1; i <= tc ; i++) {
             st = new StringTokenizer(br.readLine());
-
             n = Integer.parseInt(st.nextToken());
             m = Integer.parseInt(st.nextToken());
 
             board = new int[n][m];
-            list = new ArrayList<>();
 
+            deque = new ArrayDeque<>();
             for (int j = 0; j < n; j++) {
                 st = new StringTokenizer(br.readLine());
-
                 String s = st.nextToken();
 
-                for (int k = 0; k < s.length(); k++) {
-                    if(s.charAt(k) == '#'){ // black 1
+                for (int k = 0; k < m; k++) {
+                    if(s.charAt(k) == '#') {
                         board[j][k] = 1;
-                    }else if(s.charAt(k) == '.'){ // white 2
+                        deque.add(new int[]{j,k});
+                    }
+                    else if(s.charAt(k) == '.') {
                         board[j][k] = 2;
-                    }else{ // ? 0  -> queue
-                        list.add(new int[]{j, k});
+                        deque.add(new int[]{j,k});
                     }
                 }
             }
 
-            count = list.size();
-
-            answer = false;
-            dfs(board, 0);
-
-            if(answer){
+            if(bfs()){
                 sb.append("#").append(i).append(" ").append("possible").append("\n");
             }else{
                 sb.append("#").append(i).append(" ").append("impossible").append("\n");
             }
 
-
-
         }
-
         System.out.println(sb);
-
     }
-    public static void dfs(int[][] board, int depth){
-        if(answer) return;
+    public static boolean bfs(){
+//        boolean[][] visited = new boolean[n][m];
 
-        if(!checkBoard(board)) return;
+        while(!deque.isEmpty()){
+            int[] now = deque.pollFirst();
 
-        if(depth == count) {
-            answer = true;
-            System.out.println(Arrays.deepToString(board));
-            return;
-        }
+            for (int i = 0; i < 4; i++) {
+                int r = now[0] + ry[i];
+                int c = now[1] + rx[i];
 
+                if(r<0 || c<0 || r>=n || c>= m) continue;
 
+                if(board[now[0]][now[1]] == board[r][c]) return false;
 
-        int[] now = list.get(depth);
-
-        board[now[0]][now[1]] = 1;
-        dfs(board, depth+1);
-
-
-        board[now[0]][now[1]] = 2;
-        dfs(board, depth+1);
-
-
-
-    }
-
-    public static boolean checkBoard(int[][] board){
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if(board[i][j] == 1 || board[i][j] == 2){
-                    int color = board[i][j];
-
-                    for (int k = 0; k< 4; k++) {
-                        int r = i + ry[k];
-                        int c = j + rx[k];
-
-
-                        if(r < 0 || c< 0|| r>= n || c>= m) continue;
-
-                        if(board[r][c] == color){
-                            return false; // 인접 격자판 겹침
-                        }
+                if(board[r][c] == 0){
+                    if(board[now[0]][now[1]] == 1){
+                        board[r][c] = 2;
+                        deque.addLast(new int[]{r,c});
+                    }else{
+                        board[r][c] = 1;
+                        deque.addLast(new int[]{r,c});
                     }
-
                 }
             }
         }
+
 
         return true;
     }
