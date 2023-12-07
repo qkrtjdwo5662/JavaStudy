@@ -5,28 +5,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-public class N_1251 {
-
-    public static int[] parents;
-    public static Point[] islands;
+public class N_1494_fail {
+    public static int[] parent;
+    public static Point[] earthWorm;
     public static class Edge{
         int a;
         int b;
-        double cost;
+        long cost;
 
-        public Edge(int a, int b, double cost){
+        public Edge(int a, int b, long cost){
             this.a = a;
             this.b = b;
             this.cost = cost;
         }
-
     }
-
-    public static ArrayList<Edge> edges;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -34,39 +29,32 @@ public class N_1251 {
 
         int tc = Integer.parseInt(st.nextToken());
 
-        for (int i = 1; i <= tc ; i++) {
+        for (int i = 0; i < tc; i++) {
             st = new StringTokenizer(br.readLine());
-            int n = Integer.parseInt(st.nextToken()); // 섬의 개수
-
-            parents = new int[n+1];
+            int n = Integer.parseInt(st.nextToken());
+            parent = new int[n+1];
 
             for (int j = 1; j <= n ; j++) {
-                parents[j] = j;
+                parent[j] = j;
             }
-            islands = new Point[n+1];
+            earthWorm = new Point[n+1];
 
-            st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= n; j++) { // x좌표
+            for (int j = 1; j <= n ; j++) {
+                st = new StringTokenizer(br.readLine());
                 int x = Integer.parseInt(st.nextToken());
-                islands[j] = new Point(0, 0);
-                islands[j].x = x;
-            }
-
-            st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= n; j++) { // y죄료
                 int y = Integer.parseInt(st.nextToken());
-                islands[j].y = y;
+
+                earthWorm[j] = new Point(0, 0);
+                earthWorm[j].x = x;
+                earthWorm[j].y = y;
             }
 
-            st = new StringTokenizer(br.readLine());
-            double e = Double.parseDouble(st.nextToken());
-
-            edges = new ArrayList<>();
-            for (int j = 1; j <= n-1 ; j++) {
+            ArrayList<Edge> edges = new ArrayList<>();
+            for (int j = 1; j < n ; j++) {
                 for (int k = j+1; k <= n ; k++) {
                     int a = j;
                     int b = k;
-                    double cost = (Math.pow(Math.abs(islands[j].x - islands[k].x), 2) + Math.pow(Math.abs(islands[j].y - islands[k].y), 2) ) * e;
+                    long cost = (long) (Math.pow(Math.abs(earthWorm[j].x - earthWorm[k].x), 2) + Math.pow(Math.abs(earthWorm[j].y - earthWorm[k].y), 2));
 
                     Edge edge = new Edge(a, b, cost);
                     edges.add(edge);
@@ -74,15 +62,13 @@ public class N_1251 {
             }
 
             Collections.sort(edges, (o1, o2) -> {
-                return Double.compare(o1.cost, o2.cost);
+                return Long.compare(o1.cost, o2.cost);
             });
-
-            double answer = 0;
+            long answer = 0;
             for (int j = 0; j < edges.size(); j++) {
-                Edge edge = edges.get(j);
-                int a = edge.a;
-                int b = edge.b;
-                double cost = edge.cost;
+                int a = edges.get(j).a;
+                int b = edges.get(j).b;
+                long cost = edges.get(j).cost;
 
                 if(find(a) != find(b)){
                     union(a, b);
@@ -90,8 +76,7 @@ public class N_1251 {
                 }
             }
 
-
-            sb.append("#").append(i).append(" ").append(Math.round(answer)).append("\n");
+            sb.append("#").append(i).append(" ").append(answer).append("\n");
         }
         System.out.println(sb);
     }
@@ -99,12 +84,14 @@ public class N_1251 {
         int x = find(a);
         int y = find(b);
 
-        parents[x] = y;
+        parent[x] = y;
     }
+
     public static int find(int a){
-        if(parents[a] == a){
-            return parents[a];
+        if(parent[a] == a){
+            return parent[a];
         }
-        return parents[a] = find(parents[a]);
+
+        return parent[a] = find(parent[a]);
     }
 }
