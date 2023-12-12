@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N_7985 {
-    public static int s_idx;
+    public static int[] nodes;
+    public static int[] tree;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -16,33 +17,43 @@ public class N_7985 {
 
         for (int i = 1; i <= tc ; i++) {
             st = new StringTokenizer(br.readLine());
-            s_idx = 0;
             int k = Integer.parseInt(st.nextToken());
 
-            int[] tree = new int[(int)Math.pow(2, k)];
-            s_idx = (int)Math.pow(2, k-1);
-            int index = 1;
+            int n = (int)Math.pow(2, k);
+            nodes = new int[n];
 
             st = new StringTokenizer(br.readLine());
-            while(index < tree.length){
+            for (int j = 1; j < n ; j++) {
                 int num = Integer.parseInt(st.nextToken());
 
-                tree[s_idx] = num;
-
-                if(s_idx/2 != 1 && s_idx%2 == 0){ // 루트 노드 자식이 아니고, s_idx가 짝수라면
-                    s_idx = s_idx+1;
-                }else if(s_idx/2 != 1 && s_idx%2 == 1){ // 루트 노드 자식이 아니고, s_idx가 홀수라면
-                    s_idx = s_idx/2;
-                }
-
-                if(s_idx == 1){
-                    s_idx = s_idx*2 + 1;
-                }
-
-                index++;
+                nodes[j] = num;
             }
-            sb.append("#").append(i).append(" ");
 
+            tree = new int[n];
+            recursion(1, n-1, 1);
+            sb.append("#").append(i).append(" ");
+            for (int j = 0; j < k; j++) {
+                for (int l = (int)Math.pow(2, j); l <(int)Math.pow(2, j+1) ; l++) {
+                    sb.append(tree[l]).append(" ");
+                }
+                sb.append("\n");
+            }
         }
+        System.out.println(sb);
+    }
+
+    public static void recursion(int left, int right, int index){
+        int root = (left + right) /2;
+
+        tree[index] = nodes[root];
+
+        if(left == right){
+            return;
+        }
+
+        recursion(left, root-1,index*2 );
+        recursion(root + 1, right,index*2+1);
+
+
     }
 }

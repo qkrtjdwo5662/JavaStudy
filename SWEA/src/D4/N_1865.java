@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class N_1865_fail {
+public class N_1865 {
+    public static int n;
+    public static int[][] arr;
+    public static boolean[] visited;
     public static double answer;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,43 +19,43 @@ public class N_1865_fail {
 
         for (int i = 1; i <= tc ; i++) {
             st = new StringTokenizer(br.readLine());
+            n = Integer.parseInt(st.nextToken());
 
-            int n = Integer.parseInt(st.nextToken());
-            int[][] arr = new int[n][n];
+            arr = new int[n][n];
 
             for (int j = 0; j < n; j++) {
-                st = new StringTokenizer(br.readLine());
-                for (int k = 0; k < n ; k++) {
+                st =  new StringTokenizer(br.readLine());
+                for (int k = 0; k < n; k++) {
                     int num = Integer.parseInt(st.nextToken());
                     arr[j][k] = num;
                 }
             }
-
-            boolean[] visited = new boolean[n];
+            visited = new boolean[n];
             answer = 0;
-
-            backtrack(0, visited, 1, arr, n);
-            sb.append("#").append(i).append(" ").append(String.format("%.6f", answer)).append("\n");
+            backtrack(0, 1);
+            sb.append("#").append(i).append(" ").append(String.format("%.6f",(answer))).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static void backtrack(int depth, boolean[] visited, double multi, int[][] arr, int n){
-        if(multi*100 <= answer){
-            System.out.println(multi*100 + " " + answer);
+    public static void backtrack(int depth, double multi){
+        if(multi * 100 <= answer){
+            return;
+        }
+        // 한번 answer보다 낮게 되면 무엇을 곱해도 결과는 answer보다 낮음
+
+        if(depth == n){
+            if(multi*100 > answer){
+                answer = multi*100;
+            }
             return;
         }
 
-        if(depth == n){
-            System.out.println(multi*100 + " " + answer + "NNNNN");
-            answer = Math.max(answer, multi*100);
-            return;
-        }
 
         for (int i = 0; i < n; i++) {
             if(!visited[i]){
                 visited[i] = true;
-                backtrack(depth+1, visited, multi * arr[depth][i] / 100, arr, n);
+                backtrack(depth+1, multi * arr[depth][i]/100);
                 visited[i] = false;
             }
         }
