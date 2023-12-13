@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
@@ -23,38 +22,42 @@ public class N_15989_fail {
             set = new HashSet<>();
 
 
-            dfs(0, "", 0, n);
+            dfs(1, "1", 1, n);
+            dfs(2, "2", 2, n);
+            dfs(3, "3", 3, n);
+
             sb.append(answer).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static void dfs(int sum, String s, int count ,int n){
+    public static void dfs(int sum, String s, int now ,int n){
         if(sum > n) return;
 
         if(sum == n){
-            String[] arr = s.split(" ");
-            Arrays.sort(arr);
-            StringBuilder sbb = new StringBuilder();
-            for (int i = 0; i < arr.length; i++) {
-                sbb.append(arr[i]);
-            }
-            if(!set.contains(sbb.toString())) {
-                set.add(sbb.toString());
+            if(!set.contains(s)) {
+                set.add(s);
                 answer += 1;
             }
+            System.out.println(set);
             return;
         }
 
-        if(count == 0){
-            dfs(1, "1", 1, n);
-            dfs(2, "2", 1, n);
-            dfs(3, "3", 1, n);
-        }else{
-            dfs(sum + 1, s+" "+1, count+1, n);
-            dfs(sum + 2, s+" "+2, count+1, n);
-            dfs(sum + 3, s+" "+3, count+1, n);
+        for (int i = now; i <= 3; i++) {
+            if(sum+i <= n){
+                dfs(sum+i, s+i, i, n);
+            }
         }
+
+//        if(count == 0){
+//            dfs(1, "1", 1, n);
+//            dfs(2, "2", 1, n);
+//            dfs(3, "3", 1, n);
+//        }else{
+//            dfs(sum + 1, s+" "+1, count+1, n);
+//            dfs(sum + 2, s+" "+2, count+1, n);
+//            dfs(sum + 3, s+" "+3, count+1, n);
+//        }
     }
 }
 
