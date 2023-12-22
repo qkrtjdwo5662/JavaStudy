@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class MinimizeSalesDecline {
     public static int[] sales = {14, 17, 15, 18, 19, 14, 13, 16, 28, 17};
@@ -21,19 +23,21 @@ public class MinimizeSalesDecline {
             int a = links[i][0];
             int b = links[i][1];
 
-            union(a, b);
-            System.out.println(Arrays.toString(parent));
+            parent[b] = a;
         }
+        System.out.println(Arrays.toString(parent));
 
-//        System.out.println(Arrays.toString(parent));
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 1; i <= n; i++) {
+            set.add(parent[i]);
+        }
+        System.out.println(set);
         return answer;
     }
 
     public static void union(int a, int b){
-        int x = find(a);
-        int y = find(b);
 
-        parent[y] = x;
+        parent[b] = a;
     }
 
     public static int find(int a){
