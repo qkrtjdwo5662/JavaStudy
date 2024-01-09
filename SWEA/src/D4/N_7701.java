@@ -30,14 +30,10 @@ public class N_7701 {
 
             }
             Collections.sort(list, ((o1, o2) -> {
-                if(o1.length() < o2.length()){
-                    return o1;
-                }else if(o1.length() > o2.length()){
-                    return o2;
+                if(o1.length() != o2.length()){
+                    return Integer.compare(o1.length(), o2.length());
                 }else{
-                    if(compare(o1, o2) == 0){
-                        return o1;
-                    }else return o2;
+                    return o1.compareTo(o2);
                 }
             }));
 
@@ -49,19 +45,4 @@ public class N_7701 {
         System.out.println(sb);
     }
 
-    public static int compare(String s1, String s2){
-        int n = s1.length();
-        for (int i = 0; i < n ; i++) {
-            int a = s1.charAt(i) - '0';
-            int b = s2.charAt(i) - '0';
-
-            if(a < b){
-                return 0;
-            }else if(a > b){
-                return 1;
-            }
-        }
-
-        return 1;
-    }
 }
