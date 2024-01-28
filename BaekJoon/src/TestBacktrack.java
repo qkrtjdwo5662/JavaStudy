@@ -1,20 +1,30 @@
+import java.util.ArrayList;
+
 public class TestBacktrack {
-    public static String[] arr = new String[]{"a", "b", "c", "d"};
+    public static int[] arr = new int[1000];
     public static void main(String[] args) {
-        boolean[] visited = new boolean[4];
-        backtrack("", visited, 0);
+
+        long a = System.currentTimeMillis();
+        boolean[] visited = new boolean[arr.length];
+        backtrack(new ArrayList<>(), 0, visited);
+        long b = System.currentTimeMillis();
+
+        long diff = (b-a) / 1000;
+        System.out.println(diff);
     }
 
-    public static void backtrack(String s, boolean[] visited, int index){
-        if(s.length() == 3){
-            System.out.println(s);
+    public static void backtrack(ArrayList<Integer> list, int index, boolean[] visited){
+        if(list.size() == 3){
+//            System.out.println(list);
             return;
         }
 
-        for (int i = index; i < 4; i++) {
+        for (int i = index; i < arr.length; i++) {
             if(!visited[i]){
                 visited[i] = true;
-                backtrack(s+arr[i], visited, i);
+                list.add(arr[i]);
+                backtrack(list, i, visited);
+                list.remove(list.size()-1);
                 visited[i] = false;
             }
         }
